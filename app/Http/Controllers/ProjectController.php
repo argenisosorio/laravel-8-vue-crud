@@ -9,13 +9,24 @@ class ProjectController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
-    | LIST - JSON RESPONSE
+    | VUE LIST - JSON RESPONSE
+    |--------------------------------------------------------------------------
+    */
+    public function vueList()
+    {
+        $projects = Project::get();
+        return response()->json(['projects'=>$projects], 200);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | LIST
     |--------------------------------------------------------------------------
     */
     public function index()
     {
         $projects = Project::get();
-        return response()->json(['projects'=>$projects], 200);
+        return view('projects.index', compact('projects'));
     }
 
     /*

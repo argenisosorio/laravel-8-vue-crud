@@ -19432,8 +19432,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/aosorio/Documentos/Proyectos/Laravel/laravel-8-crud-vue/laravel_8_crud/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/aosorio/Documentos/Proyectos/Laravel/laravel-8-crud-vue/laravel_8_crud/resources/css/app.css */"./resources/css/app.css");
+__webpack_require__(/*! /home/aosorio/Documentos/Proyectos/Laravel/laravel-8-vue-crud/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/aosorio/Documentos/Proyectos/Laravel/laravel-8-vue-crud/resources/css/app.css */"./resources/css/app.css");
 
 
 /***/ })
