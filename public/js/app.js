@@ -2166,10 +2166,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      projects: []
+    };
+  },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    var _this = this;
+
+    axios__WEBPACK_IMPORTED_MODULE_0___default().get('http://127.0.0.1:8000/projects-vue-list').then(function (response) {
+      console.log(response);
+      _this.projects = response.data.projects; // console.log(this.projects)
+      // console.log('done')
+    })["catch"](function (error) {
+      console.log('error');
+    });
   }
 });
 
@@ -37654,9 +37682,42 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    Hello i am Project List Component\n")])
+  return _c("div", [
+    _c("h1", [_vm._v("List of projects")]),
+    _vm._v(" "),
+    _c("table", { attrs: { border: "1px" } }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.projects, function (project) {
+          return _c("tr", [
+            _c("td", { domProps: { textContent: _vm._s(project.name) } }),
+            _vm._v(" "),
+            _c("td", {
+              domProps: { textContent: _vm._s(project.introduction) },
+            }),
+          ])
+        }),
+        0
+      ),
+    ]),
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Introduction")]),
+      ]),
+    ])
+  },
+]
 render._withStripped = true
 
 
