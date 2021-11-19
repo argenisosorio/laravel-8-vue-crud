@@ -1,12 +1,22 @@
 <template>
     <div>
+        <div>
+            <h1>Project form</h1>
+            <label>Name</label>
+            <input id="name" v-model="name" type="text">
+            <br>
+            <label>Introduction</label>
+            <input id="introduction" v-model="introduction" type="text">
+            <br>
+            <button type="button" @click="saveForm()">SAVE</button>
+        </div>
+        <hr>
         <h1>List of projects</h1>
         <table border="1px">
             <thead>
                 <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Introduction</th>
-                    
                 </tr>
             </thead>
             <tbody>
@@ -24,10 +34,15 @@ import axios from 'axios';
 export default {
     data () {
         return {
-        projects: []
+            name:"",
+            introduction:"",
+            projects: []
         }
     },
     mounted () {
+        /*
+        * Request that gets the saved data
+        */
         axios.get('http://127.0.0.1:8000/projects-vue-list')
         .then((response) => {
             console.log(response)
@@ -38,6 +53,23 @@ export default {
         .catch((error) => {
             console.log('error')
         })
+    },
+    methods: {
+        /*
+        * Method for saving data.
+        */
+        saveForm () {
+            let url = 'http://127.0.0.1:8000/projects'
+            axios.post(url,{
+                'name':this.name,
+                'introduction':this.introduction,
+            }).then(function (response) {
+                // console.log('done')
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
     }
 }
 </script>

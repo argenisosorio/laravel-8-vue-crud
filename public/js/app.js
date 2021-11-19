@@ -2181,16 +2181,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      name: "",
+      introduction: "",
       projects: []
     };
   },
   mounted: function mounted() {
     var _this = this;
 
+    /*
+    * Request that gets the saved data
+    */
     axios__WEBPACK_IMPORTED_MODULE_0___default().get('http://127.0.0.1:8000/projects-vue-list').then(function (response) {
       console.log(response);
       _this.projects = response.data.projects; // console.log(this.projects)
@@ -2198,6 +2213,21 @@ __webpack_require__.r(__webpack_exports__);
     })["catch"](function (error) {
       console.log('error');
     });
+  },
+  methods: {
+    /*
+    * Method for saving data.
+    */
+    saveForm: function saveForm() {
+      var url = 'http://127.0.0.1:8000/projects';
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(url, {
+        'name': this.name,
+        'introduction': this.introduction
+      }).then(function (response) {// console.log('done')
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
   }
 });
 
@@ -37683,6 +37713,75 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c("div", [
+      _c("h1", [_vm._v("Project form")]),
+      _vm._v(" "),
+      _c("label", [_vm._v("Name")]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.name,
+            expression: "name",
+          },
+        ],
+        attrs: { id: "name", type: "text" },
+        domProps: { value: _vm.name },
+        on: {
+          input: function ($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.name = $event.target.value
+          },
+        },
+      }),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c("label", [_vm._v("Introduction")]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.introduction,
+            expression: "introduction",
+          },
+        ],
+        attrs: { id: "introduction", type: "text" },
+        domProps: { value: _vm.introduction },
+        on: {
+          input: function ($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.introduction = $event.target.value
+          },
+        },
+      }),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          attrs: { type: "button" },
+          on: {
+            click: function ($event) {
+              return _vm.saveForm()
+            },
+          },
+        },
+        [_vm._v("SAVE")]
+      ),
+    ]),
+    _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
     _c("h1", [_vm._v("List of projects")]),
     _vm._v(" "),
     _c("table", { attrs: { border: "1px" } }, [
