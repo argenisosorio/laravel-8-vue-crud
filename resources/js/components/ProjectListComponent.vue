@@ -17,12 +17,16 @@
                 <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Introduction</th>
+                    <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="project in projects">
                     <td v-text="project.name"></td>
                     <td v-text="project.introduction"></td>
+                    <td>
+                        <button type="button" @click="deleteRecord(project)">DELETE</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -41,11 +45,11 @@ export default {
     },
     mounted () {
         /*
-        * Request that gets the saved data
+        * Request that gets the saved data.
         */
         axios.get('http://127.0.0.1:8000/projects-vue-list')
         .then((response) => {
-            console.log(response)
+            // console.log(response)
             this.projects = response.data.projects
             // console.log(this.projects)
             // console.log('done')
@@ -65,11 +69,26 @@ export default {
                 'introduction':this.introduction,
             }).then(function (response) {
                 // console.log('done')
+                location.href = '/projects'
             })
             .catch(function (error) {
                 console.log(error);
             });
-        }
+        },
+        deleteRecord (data) {
+            let project_id = data.id
+            if (confirm('Are you sure you want to delete the record?')) {
+                axios.delete('http://127.0.0.1:8000/projects/'+project_id
+                ).then(function (response) {
+                    // console.log('done')
+                    location.href = '/projects'
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            }
+        },
     }
 }
 </script>
+

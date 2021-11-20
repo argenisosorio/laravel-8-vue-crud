@@ -2191,6 +2191,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -2204,10 +2208,10 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     /*
-    * Request that gets the saved data
+    * Request that gets the saved data.
     */
     axios__WEBPACK_IMPORTED_MODULE_0___default().get('http://127.0.0.1:8000/projects-vue-list').then(function (response) {
-      console.log(response);
+      // console.log(response)
       _this.projects = response.data.projects; // console.log(this.projects)
       // console.log('done')
     })["catch"](function (error) {
@@ -2223,10 +2227,24 @@ __webpack_require__.r(__webpack_exports__);
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(url, {
         'name': this.name,
         'introduction': this.introduction
-      }).then(function (response) {// console.log('done')
+      }).then(function (response) {
+        // console.log('done')
+        location.href = '/projects';
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    deleteRecord: function deleteRecord(data) {
+      var project_id = data.id;
+
+      if (confirm('Are you sure you want to delete the record?')) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"]('http://127.0.0.1:8000/projects/' + project_id).then(function (response) {
+          // console.log('done')
+          location.href = '/projects';
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
     }
   }
 });
@@ -37796,6 +37814,21 @@ var render = function () {
             _c("td", {
               domProps: { textContent: _vm._s(project.introduction) },
             }),
+            _vm._v(" "),
+            _c("td", [
+              _c(
+                "button",
+                {
+                  attrs: { type: "button" },
+                  on: {
+                    click: function ($event) {
+                      return _vm.deleteRecord(project)
+                    },
+                  },
+                },
+                [_vm._v("DELETE")]
+              ),
+            ]),
           ])
         }),
         0
@@ -37813,6 +37846,8 @@ var staticRenderFns = [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Name")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Introduction")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Actions")]),
       ]),
     ])
   },
