@@ -2195,13 +2195,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       name: "",
       introduction: "",
-      projects: []
+      projects: [],
+      url: 'projects'
     };
   },
   mounted: function mounted() {
@@ -2211,9 +2214,7 @@ __webpack_require__.r(__webpack_exports__);
     * Request that gets the saved data.
     */
     axios__WEBPACK_IMPORTED_MODULE_0___default().get('http://127.0.0.1:8000/projects-vue-list').then(function (response) {
-      // console.log(response)
-      _this.projects = response.data.projects; // console.log(this.projects)
-      // console.log('done')
+      _this.projects = response.data.projects;
     })["catch"](function (error) {
       console.log('error');
     });
@@ -2223,13 +2224,12 @@ __webpack_require__.r(__webpack_exports__);
     * Method for saving data.
     */
     saveForm: function saveForm() {
-      var url = 'http://127.0.0.1:8000/projects';
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post(url, {
+      var vm = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(vm.url, {
         'name': this.name,
         'introduction': this.introduction
       }).then(function (response) {
-        // console.log('done')
-        location.href = '/projects';
+        location.href = vm.url;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2249,6 +2249,19 @@ __webpack_require__.r(__webpack_exports__);
           console.log(error);
         });
       }
+    },
+
+    /*
+    * Function that loads data into form fields.
+    */
+    loadDataField: function loadDataField(data) {
+      var vm = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('http://127.0.0.1:8000/projects/' + data.id).then(function (response) {
+        vm.name = data.name;
+        vm.introduction = data.introduction; // console.log(data.name);
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   }
 });
@@ -37820,6 +37833,19 @@ var render = function () {
             }),
             _vm._v(" "),
             _c("td", [
+              _c(
+                "button",
+                {
+                  attrs: { type: "button" },
+                  on: {
+                    click: function ($event) {
+                      return _vm.loadDataField(project)
+                    },
+                  },
+                },
+                [_vm._v("UPDATE")]
+              ),
+              _vm._v(" "),
               _c(
                 "button",
                 {

@@ -9,6 +9,7 @@
             <input id="introduction" v-model="introduction" type="text">
             <br>
             <button type="button" @click="saveForm()">SAVE</button>
+            <!--button type="button" @click="updateRecord()">UPDATE</!--button-->
         </div>
         <hr>
         <h1>List of projects</h1>
@@ -25,6 +26,7 @@
                     <td v-text="project.name"></td>
                     <td v-text="project.introduction"></td>
                     <td>
+                        <button type="button" @click="loadDataField(project)">UPDATE</button>
                         <button type="button" @click="deleteRecord(project)">DELETE</button>
                     </td>
                 </tr>
@@ -40,7 +42,8 @@ export default {
         return {
             name:"",
             introduction:"",
-            projects: []
+            projects: [],
+            url: 'projects',
         }
     },
     mounted () {
@@ -49,10 +52,7 @@ export default {
         */
         axios.get('http://127.0.0.1:8000/projects-vue-list')
         .then((response) => {
-            // console.log(response)
             this.projects = response.data.projects
-            // console.log(this.projects)
-            // console.log('done')
         })
         .catch((error) => {
             console.log('error')
@@ -63,13 +63,12 @@ export default {
         * Method for saving data.
         */
         saveForm () {
-            let url = 'http://127.0.0.1:8000/projects'
-            axios.post(url,{
+            let vm = this;
+            axios.post(vm.url,{
                 'name':this.name,
                 'introduction':this.introduction,
             }).then(function (response) {
-                // console.log('done')
-                location.href = '/projects'
+                location.href = vm.url
             })
             .catch(function (error) {
                 console.log(error);
@@ -91,7 +90,22 @@ export default {
                 });
             }
         },
+        /*
+        * Function that loads data into form fields.
+        */
+        loadDataField (data) {
+            let vm = this;
+            axios.get('http://127.0.0.1:8000/projects/'+data.id
+            )
+            .then(function (response) {
+                vm.name = data.name;
+                vm.introduction = data.introduction;
+                // console.log(data.name);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        },
     }
 }
 </script>
-
