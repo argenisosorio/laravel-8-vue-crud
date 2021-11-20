@@ -2234,6 +2234,10 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
+
+    /*
+    * Method that allows you to delete a record.
+    */
     deleteRecord: function deleteRecord(data) {
       var project_id = data.id;
 

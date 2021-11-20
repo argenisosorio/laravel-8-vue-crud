@@ -75,6 +75,9 @@ export default {
                 console.log(error);
             });
         },
+        /*
+        * Method that allows you to delete a record.
+        */
         deleteRecord (data) {
             let project_id = data.id
             if (confirm('Are you sure you want to delete the record?')) {
