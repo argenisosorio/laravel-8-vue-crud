@@ -9,7 +9,6 @@
             <input id="introduction" v-model="introduction" type="text">
             <br>
             <button type="button" @click="saveRecord()">SAVE</button>
-            <!--button type="button" @click="updateRecord()">UPDATE</!--button-->
         </div>
         <hr>
         <h1>List of projects</h1>
