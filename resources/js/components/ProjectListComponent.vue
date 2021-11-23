@@ -8,7 +8,7 @@
             <label>Introduction</label>
             <input id="introduction" v-model="introduction" type="text">
             <br>
-            <button type="button" @click="saveForm()">SAVE</button>
+            <button type="button" @click="saveRecord()">SAVE</button>
             <!--button type="button" @click="updateRecord()">UPDATE</!--button-->
         </div>
         <hr>
@@ -40,10 +40,10 @@ import axios from 'axios';
 export default {
     data () {
         return {
+            id:"",
             name:"",
             introduction:"",
             projects: [],
-            url: 'projects',
         }
     },
     mounted () {
@@ -60,15 +60,21 @@ export default {
     },
     methods: {
         /*
-        * Method for saving data.
+        * Method for saving new data and updating one record saved.
         */
-        saveForm () {
-            let vm = this;
-            axios.post(vm.url,{
-                'name':this.name,
-                'introduction':this.introduction,
-            }).then(function (response) {
-                location.href = vm.url
+        async saveRecord() {
+            const vm = this;
+            const projectId = (typeof(vm.id)!=="undefined" && vm.id) ? vm.id : '';
+            await axios({
+                method: (projectId) ? 'put' : 'post',
+                url: `http://127.0.0.1:8000/projects/${projectId}`,
+                data: {
+                    name: vm.name,
+                    introduction: vm.introduction
+                }
+            })
+            .then(response => {
+                location.href = '/projects'
             })
             .catch(function (error) {
                 console.log(error);
@@ -100,7 +106,7 @@ export default {
             .then(function (response) {
                 vm.name = data.name;
                 vm.introduction = data.introduction;
-                // console.log(data.name);
+                vm.id = data.id;
             })
             .catch(function (error) {
                 console.log(error);
