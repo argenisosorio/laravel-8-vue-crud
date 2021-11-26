@@ -8,6 +8,7 @@
             <label>Introduction</label>
             <input id="introduction" v-model="introduction" type="text">
             <br>
+            <button type="reset"  @click="reset()">RESET</button>
             <button type="button" @click="saveRecord()">SAVE</button>
         </div>
         <hr>
@@ -15,6 +16,7 @@
         <table border="1px">
             <thead>
                 <tr>
+                    <th scope="col">ID</th>
                     <th scope="col">Name</th>
                     <th scope="col">Introduction</th>
                     <th scope="col">Actions</th>
@@ -22,6 +24,7 @@
             </thead>
             <tbody>
                 <tr v-for="project in projects">
+                    <td v-text="project.id"></td>
                     <td v-text="project.name"></td>
                     <td v-text="project.introduction"></td>
                     <td>
@@ -58,6 +61,15 @@ export default {
         })
     },
     methods: {
+        /*
+        * Method to clean the form.
+        */
+        reset() {
+            const vm = this;
+            vm.name = "";
+            vm.introduction = "";
+            vm.id = "";
+        },
         /*
         * Method for saving new data and updating one record saved.
         */

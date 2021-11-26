@@ -2216,6 +2216,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -2239,6 +2241,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     });
   },
   methods: {
+    /*
+    * Method to clean the form.
+    */
+    reset: function reset() {
+      var vm = this;
+      vm.name = "";
+      vm.introduction = "";
+      vm.id = "";
+    },
+
     /*
     * Method for saving new data and updating one record saved.
     */
@@ -38610,6 +38622,19 @@ var render = function () {
       _c(
         "button",
         {
+          attrs: { type: "reset" },
+          on: {
+            click: function ($event) {
+              return _vm.reset()
+            },
+          },
+        },
+        [_vm._v("RESET")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
           attrs: { type: "button" },
           on: {
             click: function ($event) {
@@ -38632,6 +38657,8 @@ var render = function () {
         "tbody",
         _vm._l(_vm.projects, function (project) {
           return _c("tr", [
+            _c("td", { domProps: { textContent: _vm._s(project.id) } }),
+            _vm._v(" "),
             _c("td", { domProps: { textContent: _vm._s(project.name) } }),
             _vm._v(" "),
             _c("td", {
@@ -38679,6 +38706,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("ID")]),
+        _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Name")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Introduction")]),
