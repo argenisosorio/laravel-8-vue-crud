@@ -1,5 +1,10 @@
 <template>
     <div>
+        <loading
+            :active='isLoading'
+            :is-full-page="fullPage"
+            :loader='loader'
+        />
         <div>
             <h1>Project form</h1>
             <label>Name</label>
@@ -39,6 +44,8 @@
 
 <script>
 import axios from 'axios';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 export default {
     data () {
         return {
@@ -46,7 +53,13 @@ export default {
             name:"",
             introduction:"",
             projects: [],
+            isLoading: true,
+            fullPage: true,
+            loader: 'spinner' // bars, dots
         }
+    },
+    components: {
+        Loading
     },
     mounted () {
         /*
@@ -55,6 +68,11 @@ export default {
         axios.get('http://127.0.0.1:8000/projects-vue-list')
         .then((response) => {
             this.projects = response.data.projects
+            // this.isLoading = false;
+            // Method that extends the spinner to visualize it more
+            setTimeout(() => {
+                this.isLoading = false
+            }, 3000);
         })
         .catch((error) => {
             console.log('error')
