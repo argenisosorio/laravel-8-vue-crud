@@ -1,5 +1,12 @@
 <template>
     <div>
+        <div v-if="errors">
+            <div v-for="(x, key) in errors" :key="key">
+                <p v-for="error in x" :key="error" class="text-sm">
+                {{ error }}
+                </p>
+            </div>
+        </div>
         <div>
             <h1>Project form</h1>
             <label>Name</label>
@@ -46,6 +53,7 @@ export default {
             name:"",
             introduction:"",
             projects: [],
+            errors: [],
         }
     },
     mounted () {
@@ -88,7 +96,8 @@ export default {
                 location.href = '/projects'
             })
             .catch(function (error) {
-                console.log(error);
+                // pass the errors to the template
+                vm.errors = error.response.data.errors
             });
         },
         /*
